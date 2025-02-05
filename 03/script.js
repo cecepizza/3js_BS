@@ -71,6 +71,7 @@ camera.position.y = 0;
 camera.position.x = 0;
 scene.add(camera);
 
+
 // camera looks straight at cube 
 // camera.lookAt(mesh.position);
 
@@ -82,5 +83,29 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setSize(sizes.width, sizes.height);
 
-// take a picture of the scene from the camera point of view
-renderer.render(scene, camera);
+//time 
+let time = Date.now();
+
+// animation 
+const tick = () => {
+
+    // set to the current timestamp each time the tick function is called 
+    const currentTime = Date.now();
+    // deltatime is calculated by subtracting the current time from the previous time 
+    // representing the time elapsed since the last frame was rendered 
+    const deltaTime = currentTime - time;
+    // time is then updated to prepare for the next frame
+    time = currentTime;
+    // console.log(deltaTime);
+
+    cube1.rotation.y += 0.001 * deltaTime;
+
+    // take a picture of the scene from the camera point of view
+    renderer.render(scene, camera);
+
+
+    // pass or call this function every time the browser renders a new frame 
+    window.requestAnimationFrame(tick);
+}
+
+tick();
