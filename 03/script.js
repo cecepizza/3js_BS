@@ -29,6 +29,7 @@ const cube2 = new THREE.Mesh(
     new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: false})
 )
 cube2.position.x = -1.2;
+cube2.position.z = -1;
 group.add(cube2);
 
 const cube3 = new THREE.Mesh(
@@ -36,6 +37,7 @@ new THREE.BoxGeometry(1, 1, 1),
     new THREE.MeshBasicMaterial({ color: 0x0000ff, wireframe: false})
 )
 cube3.position.x = 1.2;
+cube3.position.z = .1;
 group.add(cube3);
 
 group.position.y = -.5
@@ -83,22 +85,26 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setSize(sizes.width, sizes.height);
 
-//time 
-let time = Date.now();
+const clock = new THREE.Clock();
 
 // animation 
 const tick = () => {
 
-    // set to the current timestamp each time the tick function is called 
-    const currentTime = Date.now();
-    // deltatime is calculated by subtracting the current time from the previous time 
-    // representing the time elapsed since the last frame was rendered 
-    const deltaTime = currentTime - time;
-    // time is then updated to prepare for the next frame
-    time = currentTime;
-    // console.log(deltaTime);
+    const elapsedTime = clock.getElapsedTime();
 
-    cube1.rotation.y += 0.001 * deltaTime;
+
+    // cube1.rotation.y = Math.sin(elapsedTime);
+    cube1.position.x = Math.sin(elapsedTime);
+    cube1.position.y = Math.cos(elapsedTime);
+
+    cube2.position.x = Math.cos(elapsedTime);
+    cube2.position.y = Math.sin(elapsedTime);
+
+
+    cube3.position.x = Math.sin(elapsedTime) -1 ;
+    cube3.position.y = Math.cos(elapsedTime) -1;
+
+    camera.lookAt(cube3.position);
 
     // take a picture of the scene from the camera point of view
     renderer.render(scene, camera);
