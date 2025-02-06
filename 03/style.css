@@ -1,0 +1,18 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* // to make sure the page is impossible to scroll - add hidden overflow on body and html */
+html, body {
+    overflow: hidden;
+}
+
+.webgl 
+{
+    position: fixed; 
+    top: 0;
+    left: 0;
+    outline: none
+}
