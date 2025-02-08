@@ -1,6 +1,11 @@
 import * as THREE from 'three';
 import './style.css';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import GUI from 'lil-gui';
+
+
+// lil- gui
+const gui = new GUI()
 
 // plain JS find position of the cursor
 const cursor = {
@@ -142,6 +147,8 @@ camera.position.z = 3;
 camera.position.y = 0;
 camera.position.x = 0;
 scene.add(camera);
+
+gui.add(group.position, 'y')
 
 // controls
 const controls = new OrbitControls( camera, canvas ) 
