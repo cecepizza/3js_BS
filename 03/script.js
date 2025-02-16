@@ -6,9 +6,23 @@ import gsap from 'gsap';
 
 
 // lil- gui
-const gui = new GUI()
-const debugObject = {
+const gui = new GUI((
+    {
+        width: 340,
+        title: 'cool controls',
+        closeFolders: close
+    }))
+    gui.close()
+    gui.hide()
 
+    // add keystroke to show/hide the gui
+    window.addEventListener('keydown', (event) => {
+    if (event.key == 'h') 
+        gui.show(gui._hidden)
+    })
+
+const debugObject = {
+    color: '#ff0000',
 }
 
 // plain JS find position of the cursor
@@ -22,6 +36,20 @@ window.addEventListener('mousemove', (event) => {
     // console.log(cursor.x, cursor.y);
 })
 
+/**
+ * Textures 
+ */
+const image = new Image();
+const texture = new THREE.Texture(image)
+texture.colorSpace = THREE.SRGBColorSpace; // textures used as `map` and `matcap` are in sRGB color space by default
+
+image.onload = () => {
+    texture.needsUpdate = true;
+}
+image.src = '/static/textures/door/color.jpg';
+
+
+
 // canvas - fetch the canvas element from the html
 const canvas = document.querySelector('canvas.webgl');
 console.log(canvas);
@@ -29,7 +57,6 @@ console.log(canvas);
 // scene 
 const scene = new THREE.Scene();
 
-debugObject.color = '#e19251';
 
 // // geometry
 // const geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -43,7 +70,7 @@ scene.add(group);
 
 const cube1 = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial({ color: debugObject.color})
+    new THREE.MeshBasicMaterial({ map: texture})
 )
 group.add(cube1);
 
@@ -158,6 +185,7 @@ scene.add(camera);
 
 // creat GUI folder
 const params = gui.addFolder('params')
+params.close()
 
 params.add(group.position, 'y').min(-3).max(3).step(0.01).name('y axis')
 params.add(cube1, 'visible').name('cube1 visible')
