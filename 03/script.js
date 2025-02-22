@@ -75,6 +75,7 @@ colorTexture.rotation = Math.PI * 0.25;
 colorTexture.center.x = 0.5;
 colorTexture.center.y = 0.5;
 
+
 // canvas - fetch the canvas element from the html
 const canvas = document.querySelector('canvas.webgl');
 console.log(canvas);
