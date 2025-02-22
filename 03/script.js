@@ -39,15 +39,41 @@ window.addEventListener('mousemove', (event) => {
 /**
  * Textures 
  */
-const image = new Image();
-const texture = new THREE.Texture(image)
-texture.colorSpace = THREE.SRGBColorSpace; // textures used as `map` and `matcap` are in sRGB color space by default
+const loadingManager = new THREE.LoadingManager();
 
-image.onload = () => {
-    texture.needsUpdate = true;
+loadingManager.onStart = () => {
+    console.log('onStart')
 }
-image.src = '/static/textures/door/color.jpg';
+loadingManager.onLoad = () => {
+    console.log('onLoad')
+}
+loadingManager.onProgress = () => {
+    console.log('onProgress')
+}
+loadingManager.onError = () => {
+    console.log('onError')
+}
+const textureLoader = new THREE.TextureLoader(loadingManager);
+// one texture loader can load multiple textures
+const colorTexture = textureLoader.load('/static/textures/door/color.jpg'); 
+colorTexture.colorSpace = THREE.SRGBColorSpace // add this to make sure the texture is in sRGB color space
+const alphaTexture = textureLoader.load('/static/textures/door/alpha.jpg');
+const heightTexture = textureLoader.load('/static/textures/door/height.jpg');
+const ambientOcclusionTexture = textureLoader.load('/static/textures/door/ambientOcclusion.jpg');
+const normalTexture = textureLoader.load('/static/textures/door/normal.jpg');
+const metalnessTexture = textureLoader.load('/static/textures/door/metalness.jpg');
+const roughnessTexture = textureLoader.load('/static/textures/door/roughness.jpg');
 
+// material transformations with repeat, wrap, offset, rotation, center
+colorTexture.repeat.x = 2;
+colorTexture.repeat.y = 3;
+colorTexture.wrapS = THREE.MirroredRepeatWrapping;
+colorTexture.wrapT = THREE.MirroredRepeatWrapping;
+colorTexture.offset.x = 0.5;
+colorTexture.offset.y = 0.5;
+colorTexture.rotation = Math.PI * 0.25;
+colorTexture.center.x = 0.5;
+colorTexture.center.y = 0.5;
 
 
 // canvas - fetch the canvas element from the html
@@ -70,7 +96,7 @@ scene.add(group);
 
 const cube1 = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial({ map: texture})
+    new THREE.MeshBasicMaterial({ map: colorTexture})
 )
 group.add(cube1);
 
@@ -91,6 +117,7 @@ new THREE.BoxGeometry(1, 1, 1),
 cube3.position.x = 1.2;
 cube3.position.z = .1;
 group.add(cube3);
+console.log(cube3.geometry.attributes.uv)
 
 group.position.y = -.5
 group.scale.y = 1.5;
