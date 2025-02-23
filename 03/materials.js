@@ -42,37 +42,46 @@ const doorNormalTexture = textureLoader.load('./static02/textures/door/normal.jp
 const doorMetalnessTexture = textureLoader.load('./static02/textures/door/metalness.jpg')
 const doorRoughnessTexture = textureLoader.load('./static02/textures/door/roughness.jpg')
 const matcapTexture = textureLoader.load('./static02/textures/matcaps/8.png')
-const gradientTexture = textureLoader.load('./static02/textures/gradients/3.jpg')
+const gradientTexture = textureLoader.load('./static02/textures/gradients/5.jpg')
 
 doorColorTexture.colorSpace = THREE.SRGBColorSpace
 matcapTexture.colorSpace = THREE.SRGBColorSpace
 
 // * objects */
 // mesh basic material
-// const material = new THREE.MeshBasicMaterial()
-// material.map = doorColorTexture
-// material.color = new THREE.Color('red')
-// material.wireframe = true 
-// material.alphaMap = doorAlphaTexture
-// material.opacity = 0.5
-// material.transparent = true
-// material.side = THREE.DoubleSide
+    // const material = new THREE.MeshBasicMaterial()
+    // material.map = doorColorTexture
+    // material.color = new THREE.Color('red')
+    // material.wireframe = true 
+    // material.alphaMap = doorAlphaTexture
+    // material.opacity = 0.5
+    // material.transparent = true
+    // material.side = THREE.DoubleSide
 
 // MeshNormalMaterial
-// const material = new THREE.MeshNormalMaterial()
-// material.flatShading = true
+    // const material = new THREE.MeshNormalMaterial()
+    // material.flatShading = true
 
 // MeshMatcapMaterial
-// const material = new THREE.MeshMatcapMaterial()
-// material.matcap = matcapTexture
+    // const material = new THREE.MeshMatcapMaterial()
+    // material.matcap = matcapTexture
 
 // MeshLambertMaterial
-// const material = new THREE.MeshLambertMaterial()
+    //  const material = new THREE.MeshLambertMaterial()
 
 // MeshPhongMaterial
-const material = new THREE.MeshPhongMaterial()
-material.shininess = 50
-material.specular = new THREE.Color('red')
+    // const material = new THREE.MeshPhongMaterial()
+    // material.shininess = 50
+    // material.specular = new THREE.Color('red')
+
+// MeshToonMaterial
+const material = new THREE.MeshToonMaterial()
+gradientTexture.minFilter = THREE.NearestFilter // minecreft style - when you just want big pixels
+gradientTexture.magFilter = THREE.NearestFilter 
+gradientTexture.generateMipmaps = false
+material.gradientMap = gradientTexture
+
+
 
 const sphere = new THREE.Mesh(
     new THREE.SphereGeometry(0.5, 16, 16),
