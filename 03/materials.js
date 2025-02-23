@@ -1,7 +1,12 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import './style.css';
+import GUI from 'lil-gui'
 
+/**
+ * debug UI
+ */
+const gui = new GUI()
 
 /* base canvas */
 const canvas = document.querySelector('canvas.webgl')
@@ -74,14 +79,20 @@ matcapTexture.colorSpace = THREE.SRGBColorSpace
     // material.shininess = 50
     // material.specular = new THREE.Color('red')
 
-// MeshToonMaterial
-const material = new THREE.MeshToonMaterial()
-gradientTexture.minFilter = THREE.NearestFilter // minecreft style - when you just want big pixels
-gradientTexture.magFilter = THREE.NearestFilter 
-gradientTexture.generateMipmaps = false
-material.gradientMap = gradientTexture
+// // MeshToonMaterial
+    // const material = new THREE.MeshToonMaterial()
+    // gradientTexture.minFilter = THREE.NearestFilter // minecreft style - when you just want big pixels
+    // gradientTexture.magFilter = THREE.NearestFilter 
+    // gradientTexture.generateMipmaps = false
+    // material.gradientMap = gradientTexture
 
+// MeshStandardMaterial
+const material = new THREE.MeshStandardMaterial()
+material.metalness = 0.5
+material.roughness = 0.5
 
+gui.add(material, 'metalness').min(0).max(1).step(0.0001)
+gui.add(material, 'roughness').min(0).max(1).step(0.0001)
 
 const sphere = new THREE.Mesh(
     new THREE.SphereGeometry(0.5, 16, 16),
