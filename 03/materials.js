@@ -67,9 +67,12 @@ matcapTexture.colorSpace = THREE.SRGBColorSpace
 // material.matcap = matcapTexture
 
 // MeshLambertMaterial
-const material = new THREE.MeshLambertMaterial()
+// const material = new THREE.MeshLambertMaterial()
 
-
+// MeshPhongMaterial
+const material = new THREE.MeshPhongMaterial()
+material.shininess = 50
+material.specular = new THREE.Color('red')
 
 const sphere = new THREE.Mesh(
     new THREE.SphereGeometry(0.5, 16, 16),
