@@ -17,6 +17,10 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+// axes helper
+const axesHelper = new THREE.AxesHelper()
+scene.add(axesHelper)
+
 /**
  * Textures
  */
@@ -27,32 +31,33 @@ const textureLoader = new THREE.TextureLoader()
  */
 const fontLoader = new FontLoader()
 
-fontLoader.load('./fonts/helvetiker_regular.typeface.json', (font) => {
-    const textGeometry = new TextGeometry('Hello Three.js', {
-        font: font,
+fontLoader.load('./static02/fonts/helvetiker_regular.typeface.json', (font) => {
+    const textGeometry = new TextGeometry('ce pizza', {
+        font, 
         size: 0.5,
         height: 0.2,
-        curveSegments: 5,
+        depth: 0.2,
+        curveSegments: 3,
         bevelEnabled: true,
         bevelThickness: 0.03,
         bevelSize: 0.02,
         bevelOffset: 0,
-        bevelSegments: 4
+        bevelSegments: 2
     })
-    
-    const textMaterial = new THREE.MeshBasicMaterial()
-    const text = new THREE.Mesh(textGeometry, textMaterial)
-    scene.add(text)
-})
+    textGeometry.computeBoundingBox()
+    textGeometry.translate(
+        -(textGeometry.boundingBox.max.x - 0.02) * 0.5,
+        -(textGeometry.boundingBox.max.y - 0.03) * 0.5,
+        -(textGeometry.boundingBox.max.z - 0.03) * 0.5
+    )
+    textGeometry.computeVertexNormals()
+    console.log(textGeometry.boundingBox)
 
-/**
- * Object
- */
-const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial()
-)
-scene.add(cube)
+    const textMaterial = new THREE.MeshBasicMaterial() //material
+    textMaterial.wireframe = true
+    const text = new THREE.Mesh(textGeometry, textMaterial) //mesh
+    scene.add(text) //add to scene
+})
 
 /**
  * Sizes
@@ -80,7 +85,7 @@ window.addEventListener('resize', () => {
  * Camera
  */
 // Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 10)
 camera.position.x = 1
 camera.position.y = 1
 camera.position.z = 2
