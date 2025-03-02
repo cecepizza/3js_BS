@@ -26,7 +26,7 @@ const scene = new THREE.Scene()
  */
 const textureLoader = new THREE.TextureLoader()
 const matcapTexture = textureLoader.load('./static02/textures/matcaps/3.png')
-const donutTexture = textureLoader.load('./static02/textures/matcaps/1.png')
+const donutTexture = textureLoader.load('./static02/textures/matcaps/5.png')
 matcapTexture.colorSpace = THREE.SRGBColorSpace
 
 /**
@@ -40,12 +40,12 @@ fontLoader.load('./static02/fonts/helvetiker_regular.typeface.json', (font) => {
         size: 0.5,
         height: 0.2,
         depth: 0.2,
-        curveSegments: 3,
+        curveSegments: 10,
         bevelEnabled: true,
         bevelThickness: 0.03,
-        bevelSize: 0.02,
+        bevelSize: 0.01,
         bevelOffset: 0,
-        bevelSegments: 2
+        bevelSegments: 8
     })
     // textGeometry.computeBoundingBox()
     // textGeometry.translate(
