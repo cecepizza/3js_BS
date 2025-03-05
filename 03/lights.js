@@ -27,6 +27,7 @@ directionalLight.position.set(1, 0.25, 0)
 scene.add(directionalLight)
 const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, .5)
 scene.add(directionalLightHelper)
+directionalLight.castShadow = true
 
 gui.add(ambientLight, 'intensity').min(0).max(3).step(0.001)
 
@@ -76,6 +77,7 @@ const sphere = new THREE.Mesh(
     material
 );
 sphere.position.x = - 1.5;
+sphere.castShadow = true
 
 const cube = new THREE.Mesh(
     new THREE.BoxGeometry(.75, .75, .75),
@@ -94,6 +96,8 @@ const plane = new THREE.Mesh(
 );
 plane.rotation.x = -Math.PI * 0.5;
 plane.position.y = -0.5;
+plane.receiveShadow = true
+
 
 scene.add(sphere, cube, torus, plane);
 
@@ -140,6 +144,9 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+// activate the shadow maps on the renderer
+renderer.shadowMap.enabled = true
 
 /**
  * animate
