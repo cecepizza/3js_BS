@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import GUI from 'lil-gui';
+import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper.js';
 
 /**
  * Base
@@ -19,23 +20,48 @@ const scene = new THREE.Scene()
  * lights
  */
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
-// scene.add(ambientLight)
+scene.add(ambientLight)
 
 const directionalLight = new THREE.DirectionalLight(0x00fffc, 1.5)
 directionalLight.position.set(1, 0.25, 0)
-// scene.add(directionalLight)
+scene.add(directionalLight)
+const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, .5)
+scene.add(directionalLightHelper)
 
 gui.add(ambientLight, 'intensity').min(0).max(3).step(0.001)
 
 const hemisphereLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 0.9)
-// scene.add(hemisphereLight)
+scene.add(hemisphereLight)
+const hemisphereLightHelper = new THREE.HemisphereLightHelper(hemisphereLight, .5)
+scene.add(hemisphereLightHelper)
 
-const pointLight = new THREE.PointLight(0xff9000, 1.5, 10, 2)
+const pointLight = new THREE.PointLight(0xff9000, 2.5, 10, 2)
 pointLight.position.set(1, -0.5, 1)
 scene.add(pointLight)
+const pointLightHelper = new THREE.PointLightHelper(pointLight, .2)
+scene.add(pointLightHelper)
 
-const rectAreaLight = new THREE.RectAreaLight(0x4e00ff, 2, 3, 1)
+gui.add(pointLight, 'intensity').min(0).max(10).step(0.001)
+
+const rectAreaLight = new THREE.RectAreaLight(0x4e00ff, 2, 1, 1)
+rectAreaLight.position.set(-1.5, 0, 1.5)
+// after changng the position 
+rectAreaLight.lookAt(new THREE.Vector3())
 scene.add(rectAreaLight)
+const rectAreaLightHelper = new RectAreaLightHelper(rectAreaLight)
+scene.add(rectAreaLightHelper)
+
+const spotLight = new THREE.SpotLight(0x78ff00, 4.5, 7, Math.PI * 0.1, 0.25, 1)
+spotLight.position.set(0, 2, 3)
+scene.add(spotLight)
+spotLight.target.position.x = -1
+scene.add(spotLight.target)
+const spotLightHelper = new THREE.SpotLightHelper(spotLight)
+scene.add(spotLightHelper)
+
+
+
+
 
 /**
  * objects
